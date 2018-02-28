@@ -12,11 +12,11 @@ import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
 
 public class MyTSF {
-    private static final String MODEL_FILE = "file:///android_asset/cxq.pb"; //模型存放路径
+    private static final String MODEL_FILE = "file:///android_asset/mnist.pb"; //模型存放路径
 
     //数据的维度
-    private static final int HEIGHT = 1;
-    private static final int WIDTH = 2;
+    private static final int HEIGHT = 28;
+    private static final int WIDTH = 28;
 
     //模型中输出变量的名称
     private static final String inputName = "input";
@@ -42,17 +42,15 @@ public class MyTSF {
         inferenceInterface = new TensorFlowInferenceInterface(assetManager, MODEL_FILE);
     }
 
-    public float[] getAddResult() {
-        //为输入数据赋值
-        inputs[0] = 1;
-        inputs[1] = 3;
+    public float[] getResult(float[] inputs) {
+        this.inputs = inputs;
 
-        //将数据feed给tensorflow
+        //将数据feed给模型
         Trace.beginSection("feed");
         inferenceInterface.feed(inputName, inputs, WIDTH, HEIGHT);
         Trace.endSection();
 
-        //运行乘2的操作
+        //运行识别操作
         Trace.beginSection("run");
         String[] outputNames = new String[]{outputName};
         inferenceInterface.run(outputNames);
@@ -62,7 +60,6 @@ public class MyTSF {
         Trace.beginSection("fetch");
         inferenceInterface.fetch(outputName, outputs);
         Trace.endSection();
-
         return outputs;
     }
 
