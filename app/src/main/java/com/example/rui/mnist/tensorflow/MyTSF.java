@@ -2,6 +2,7 @@ package com.example.rui.mnist.tensorflow;
 
 import android.content.res.AssetManager;
 import android.os.Trace;
+import android.util.Log;
 
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
@@ -44,6 +45,7 @@ public class MyTSF {
 
     public float[] getResult(float[] inputs) {
         this.inputs = inputs;
+        Log.d("test", "getResult: "+inputs.length);
 
         //将数据feed给模型
         Trace.beginSection("feed");
