@@ -2,18 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     sourceSets {
-        main {
+        main{
             jniLibs.srcDirs = ['libs']
         }
     }
     compileSdkVersion 26
     defaultConfig {
-        defaultConfig {
-
-            ndk {
-                abiFilters "armeabi"
-            }
-        }
         applicationId "com.example.rui.mnist"
         minSdkVersion 19
         targetSdkVersion 26
@@ -30,13 +24,13 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.orhanobut:logger:2.1.1'
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation files('libs/libandroid_tensorflow_inference_java.jar')
     compile 'com.jakewharton:butterknife:8.7.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    implementation files('libs/libandroid_tensorflow_inference_java.jar')
 }

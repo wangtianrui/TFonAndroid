@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.main_long_distanc_button:
-                Intent i = new Intent(MainActivity.this, RemoteActivity.class);
+                Intent i = new Intent(MainActivity.this, DetecteActivity.class);
                 startActivity(i);
                 break;
             case R.id.main_mnist_button:

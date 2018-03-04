@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RemoteActivity" />
+        <activity android:name=".activity.DetecteActivity" />
         <activity android:name=".activity.MnistActivity"></activity>
     </application>
 

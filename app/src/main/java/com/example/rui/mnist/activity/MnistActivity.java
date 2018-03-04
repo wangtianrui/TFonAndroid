@@ -1,15 +1,24 @@
 package com.example.rui.mnist.activity;
 
+import android.content.ClipData;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.rui.mnist.R;
-import com.example.rui.mnist.tensorflow.MyTSF;
+import com.example.rui.mnist.bean.MnistItem;
+import com.example.rui.mnist.tensorflow.MnistClassifier;
+
 import com.example.rui.mnist.ui.PrinterView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +42,8 @@ public class MnistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mnist_activity);
         ButterKnife.bind(this);
+        Log.i("Test :", "click01: ");
+
     }
 
 
@@ -48,14 +59,24 @@ public class MnistActivity extends AppCompatActivity {
                     resultTextView.setText("画板为空");
                     break;
                 }
-                MyTSF tf = new MyTSF(getAssets());
-                float[] result = tf.getResult(printerView.getData(28, 28));
-                String text = "";
+                MnistClassifier mnistClassifier = new MnistClassifier(getAssets());
+                float[] result = mnistClassifier.getResult(printerView.getData(28, 28));
+                List<MnistItem> items = new ArrayList<>(10);
                 for (int i = 0; i < result.length; i++) {
-                    text = text + i + ":" + result[i] + "; ";
+                    items.add(new MnistItem(result[i], i));
                 }
-                resultTextView.setText(text);
+                Collections.sort(items);
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < 3; i++) {
+                    MnistItem item = items.get(i);
+                    builder.append(item.getIndex())
+                            .append(": ")
+                            .append(String.format(Locale.getDefault(), "%.1f%%", item.getValue() * 100))
+                            .append("\n");
+                }
+                resultTextView.setText(builder.toString());
                 break;
         }
     }
+
 }
