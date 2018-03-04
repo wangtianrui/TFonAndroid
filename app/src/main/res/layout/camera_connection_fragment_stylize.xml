@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+  <com.example.rui.mnist.ui.AutoFitTextureView
+    android:id="@+id/texture"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true" />
+
+  <RelativeLayout
+    android:id="@+id/black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF000000" />
+
+  <GridView
+    android:id="@+id/grid_layout"
+    android:numColumns="7"
+    android:stretchMode="columnWidth"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+  <com.example.rui.mnist.ui.OverlayView
+      android:id="@+id/overlay"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_alignParentTop="true" />
+
+  <com.example.rui.mnist.ui.OverlayView
+    android:id="@+id/debug_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true" />
+</RelativeLayout>
