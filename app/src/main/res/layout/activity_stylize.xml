@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     android:background="@drawable/background2"
+    android:orientation="horizontal"
     tools:context="com.example.rui.mnist.activity.StylizeActivity">
 
 
@@ -36,6 +36,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="350dp">
+
+        </android.support.v7.widget.RecyclerView>
+
         <Button
             android:id="@+id/choose_button"
             android:layout_width="100dp"
@@ -44,7 +51,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="20dp" />
 
         <Button
             android:id="@+id/translate_button"

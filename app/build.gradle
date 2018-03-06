@@ -29,6 +29,7 @@ android {
 
 dependencies {
     compile 'com.orhanobut:logger:2.1.1'
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
@@ -37,4 +38,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.7.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     implementation files('libs/libandroid_tensorflow_inference_java.jar')
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
 }

@@ -5,23 +5,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rui.mnist.R;
 import com.example.rui.mnist.tensorflow.Stylizer;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,12 +45,15 @@ public class StylizeActivity extends AppCompatActivity {
     Button chooseButton;
     @BindView(R.id.translate_button)
     Button translateButton;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
 
     private Stylizer stylizer;
     private Bitmap bm = null;
     private String path;
     public static final int REQUESTCODE = 1056;
+    private List<String> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +61,12 @@ public class StylizeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stylize);
         ButterKnife.bind(this);
         stylizer = new Stylizer(getAssets());
+        for (int i = 0; i < 26; i++) {
+            mList.add("1");
+        }
+        StylesAdapter stylesAdapter = new StylesAdapter(mList, StylizeActivity.this);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setAdapter(stylesAdapter);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -84,7 +101,8 @@ public class StylizeActivity extends AppCompatActivity {
             try {
                 Uri originalUri = data.getData(); // 获得图片的uri
                 bm = MediaStore.Images.Media.getBitmap(resolver, originalUri);
-                imageOrigin.setImageBitmap(ThumbnailUtils.extractThumbnail(bm, 100, 100));  //使用系统的一个工具类，参数列表为 Bitmap Width,Height  这里使用压缩后显示，否则在华为手机上ImageView 没有显示
+                imageOrigin.setImageBitmap(bm);
+                //ThumbnailUtils.extractThumbnail(bm, 100, 100)
                 // 显得到bitmap图片
                 // imageView.setImageBitmap(bm);
                 String[] proj = {MediaStore.Images.Media.DATA};
@@ -107,5 +125,60 @@ public class StylizeActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    /*
+    -----------------------------Holder--------------------------------
+     */
+
+    public class StylesHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.text_view)
+        TextView textView;
+
+
+        public StylesHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void bindView(int position) {
+            textView.setText(position + "");
+        }
+
+        @OnClick(R.id.text_view)
+        public void onViewClicked() {
+            imageResult.setImageBitmap(stylizer.stylizeImage(path, Integer.parseInt(textView.getText().toString()) + 1));
+        }
+    }
+    /*
+    --------------------------------------------Adapter----------------
+     */
+
+    public class StylesAdapter extends RecyclerView.Adapter<StylesHolder> {
+        private List<String> mList;
+        private Context mContext;
+
+        public StylesAdapter(List<String> mList, Context mContext) {
+            this.mList = mList;
+            this.mContext = mContext;
+        }
+
+        @NonNull
+        @Override
+        public StylesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(mContext).inflate(R.layout.styles_item, parent, false);
+            return new StylesHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull StylesHolder holder, int position) {
+            holder.bindView(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mList.size();
+        }
     }
 }
