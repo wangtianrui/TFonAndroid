@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     sourceSets {
-        main{
+        main {
             jniLibs.srcDirs = ['libs']
         }
     }

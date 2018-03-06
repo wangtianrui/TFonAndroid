@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/background2"
+    tools:context="com.example.rui.mnist.activity.StylizeActivity">
+
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="500dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_origin"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/image_result"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/choose_button"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:text="选取" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <Button
+            android:id="@+id/translate_button"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:text="转换" />
+    </LinearLayout>
+
+
+</LinearLayout>

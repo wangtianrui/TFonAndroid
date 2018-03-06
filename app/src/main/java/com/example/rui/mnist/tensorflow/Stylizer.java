@@ -14,8 +14,9 @@ import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 public class Stylizer {
 
     private String TAG = "Stylizer";
-    private int[] intValues = new int[256*256];
-    private float[] floatValues;
+    private int IMAGE_SIZE = 256;
+    private int[] intValues = new int[IMAGE_SIZE * IMAGE_SIZE];
+    private float[] floatValues = new float[IMAGE_SIZE * IMAGE_SIZE * 3];
     private TensorFlowInferenceInterface inferenceInterface;
 
     private static final String MODEL_FILE = "file:///android_asset/stylize_quantized.pb";
@@ -32,8 +33,9 @@ public class Stylizer {
 
     public Bitmap stylizeImage(String path, int styleValue) {
         Bitmap bitmap = BitmapFactory.decodeFile(path);
+        bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, true);
         styleVals[styleValue] = 1.0f;
-        Log.d(TAG, "stylizeImage: "+bitmap.getWidth());
+        Log.d(TAG, "stylizeImage: " + bitmap.getWidth());
         bitmap.getPixels(intValues, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
         for (int i = 0; i < intValues.length; ++i) {
             final int val = intValues[i];
@@ -41,7 +43,7 @@ public class Stylizer {
             floatValues[i * 3 + 1] = ((val >> 8) & 0xFF) / 255.0f;
             floatValues[i * 3 + 2] = (val & 0xFF) / 255.0f;
         }
-        Log.d(TAG, "stylizeImage: f"+floatValues[1]);
+        Log.d(TAG, "stylizeImage: f" + floatValues[1]);
 
         inferenceInterface.feed(
                 INPUT_NAME, floatValues, 1, bitmap.getWidth(), bitmap.getHeight(), 3);
@@ -49,7 +51,7 @@ public class Stylizer {
 
         inferenceInterface.run(new String[]{OUTPUT_NAME}, false);
         inferenceInterface.fetch(OUTPUT_NAME, floatValues);
-        Log.d(TAG, "stylizeImage: "+STYLE_NAME);
+        Log.d(TAG, "stylizeImage: " + STYLE_NAME);
         for (int i = 0; i < intValues.length; ++i) {
             intValues[i] =
                     0xFF000000
@@ -57,7 +59,7 @@ public class Stylizer {
                             | (((int) (floatValues[i * 3 + 1] * 255)) << 8)
                             | ((int) (floatValues[i * 3 + 2] * 255));
         }
-        Log.d(TAG, "stylizeImage:i "+intValues[1]);
+        Log.d(TAG, "stylizeImage:i " + intValues[1]);
         bitmap.setPixels(intValues, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
         return bitmap;
     }
