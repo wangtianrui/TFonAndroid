@@ -18,10 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rui.mnist.R;
@@ -133,8 +131,8 @@ public class StylizeActivity extends AppCompatActivity {
 
     public class StylesHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.text_view)
-        TextView textView;
+        @BindView(R.id.button)
+        Button button;
 
 
         public StylesHolder(View itemView) {
@@ -143,12 +141,12 @@ public class StylizeActivity extends AppCompatActivity {
         }
 
         public void bindView(int position) {
-            textView.setText(position + "");
+            button.setText(position + "");
         }
 
-        @OnClick(R.id.text_view)
+        @OnClick(R.id.button)
         public void onViewClicked() {
-            imageResult.setImageBitmap(stylizer.stylizeImage(path, Integer.parseInt(textView.getText().toString()) + 1));
+            imageResult.setImageBitmap(stylizer.stylizeImage(path, Integer.parseInt(button.getText().toString()) + 1));
         }
     }
     /*
