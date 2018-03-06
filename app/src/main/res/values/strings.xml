@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MNIST</string>
+    <string name="app_name">TFonAndroid</string>
     <string name="description_info">Info</string>
     <string name="request_permission">请求权限</string>
     <string name="camera_error">相机error</string>

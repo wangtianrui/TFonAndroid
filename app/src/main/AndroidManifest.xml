@@ -26,6 +26,7 @@
         <activity android:name=".activity.DetecteActivity" />
         <activity android:name=".activity.StylizeActivity" />
         <activity android:name=".activity.MnistActivity" />
+        <activity android:name=".activity.CameraActivity" />
     </application>
 
 </manifest>

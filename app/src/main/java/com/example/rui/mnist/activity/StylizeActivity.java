@@ -59,7 +59,7 @@ public class StylizeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stylize);
         ButterKnife.bind(this);
         stylizer = new Stylizer(getAssets());
-        for (int i = 0; i < 26; i++) {
+        for (int i = 0; i < 25; i++) {
             mList.add("1");
         }
         StylesAdapter stylesAdapter = new StylesAdapter(mList, StylizeActivity.this);
